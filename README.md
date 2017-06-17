@@ -15,9 +15,9 @@
 全部服务使用docker管理.
 
 ## 项目内容
-+ [API代码](https://github.com/glrh111/read_in_life_api) (已上线)
++ [API代码](https://github.com/glrh111/read_in_life_api) (已上线, 参见 [API实例](http://glrh11.com/ping/ping))
 + [weapp小程序代码](https://github.com/glrh111/read_in_life_weapp) (正在开发)
-+ [服务部署相关]() (不断更新. 这是一个文件夹)
-+ [搜索服务elastic实现]()(正在开发)
++ [服务部署相关](https://github.com/glrh111/read_in_life/tree/master/deployment)
++ 搜索服务elastic实现(正在开发)
 
 

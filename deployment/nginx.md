@@ -11,7 +11,7 @@
 
 ```
 1. docker pull nginx 
-2. docker run --name nginx -p 80:80 --restart always -d -v /home/glrh11/workspace/nginxlog/:/data/ -v /home/glrh11/workspace/read-in-life-api.conf:/etc/nginx/conf.d/read-in-life-api.conf:ro nginx
+2. docker run --name nginx -p 80:80 -p 443:443 --restart always -d -v /home/glrh11/workspace/nginxlog/:/data/ -v /home/glrh11/workspace/read-in-life-api.conf:/etc/nginx/conf.d/read-in-life-api.conf:ro -v /etc/letsencrypt/archive/glrh11.com/:/etc/nginx/cert/:ro   nginx
 ```
 
 ## 配置文件实例
@@ -31,6 +31,27 @@ server {
 server {
     listen      80;
     server_name glrh11.com *.glrh11.com;
+
+    location /{
+        expires -1;
+        proxy_set_header Host $host;
+        proxy_pass http://read_in_life_api;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        access_log /data/log/nginx/glrh11.com/access_log main;
+        error_log /data/log/nginx/glrh11.com/error_log info;
+    }
+}
+
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl ipv6only=on;
+
+    ssl_certificate /etc/nginx/cert/fullchain1.pem;
+    ssl_certificate_key /etc/nginx/cert/privkey1.pem;
+    ssl_trusted_certificate /etc/nginx/cert/chain1.pem;
+
+    server_name glrh11.com;
 
     location /{
         expires -1;

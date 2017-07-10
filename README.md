@@ -22,7 +22,8 @@
 
 ## 项目内容
 + [API代码](https://github.com/glrh111/read_in_life_api) (已上线, 参见 [API实例](http://glrh11.com/ping/ping))
-+ [weapp小程序代码](https://github.com/glrh111/read_in_life_weapp) (正在开发)
++ [weapp小程序代码](https://github.com/glrh111/read_in_life_weapp) (正在开发,v0.1已经提审,但一直没通过)
++ [前端代码](https://github.com/glrh111/read_in_life_web)(正在开发)
 + [服务部署相关](https://github.com/glrh111/read_in_life/tree/master/deployment)
 + 搜索服务elastic实现(正在开发)
 

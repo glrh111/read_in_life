@@ -17,6 +17,7 @@
 ## 配置文件实例
 
 ```
+# my own write in 2017-06-17
 upstream read_in_life_api{
       server 192.168.0.4:8000  max_fails=3  fail_timeout=10s;
 }
@@ -31,6 +32,15 @@ server {
 server {
     listen      80;
     server_name glrh11.com *.glrh11.com;
+    
+    location = / {
+        root /www/read_in_life_web/;
+        index index.html;
+    }
+    location ~ \.(css|js|ico|html|txt) {
+        root /www/read_in_life_web/;
+        index index.html;
+    }
 
     location /{
         expires -1;
@@ -52,6 +62,15 @@ server {
     ssl_trusted_certificate /etc/nginx/cert/chain1.pem;
 
     server_name glrh11.com;
+    
+    location = / {
+        root /www/read_in_life_web/;
+        index index.html;
+    }
+    location ~ \.(css|js|ico|html|txt) {
+        root /www/read_in_life_web/;
+        index index.html;
+    }   
 
     location /{
         expires -1;
@@ -80,3 +99,5 @@ server {
 + 使用具有sudo权限的用户, `netstat -anp | grep 80`, 查找占用80端口的pid;
 
 + kill这个进程 `kill -9 pid`
+
+4. 关于location match "/" 以便显示首页的说明: location = /

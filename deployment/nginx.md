@@ -18,6 +18,7 @@
 
 ```
 # my own write in 2017-06-17
+# 参考: https://serverfault.com/questions/67316/in-nginx-how-can-i-rewrite-all-http-requests-to-https-while-maintaining-sub-dom
 upstream read_in_life_api{
       server 192.168.0.4:8000  max_fails=3  fail_timeout=10s;
 }
@@ -32,25 +33,7 @@ server {
 server {
     listen      80;
     server_name glrh11.com *.glrh11.com;
-    
-    location = / {
-        root /www/read_in_life_web/;
-        index index.html;
-    }
-    location ~ \.(css|js|ico|html|txt) {
-        root /www/read_in_life_web/;
-        index index.html;
-    }
-
-    location /{
-        expires -1;
-        proxy_set_header Host $host;
-        proxy_pass http://read_in_life_api;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        access_log /data/log/nginx/glrh11.com/access_log main;
-        error_log /data/log/nginx/glrh11.com/error_log info;
-    }
+    return 301 https://$server_name$request_uri;
 }
 
 server {
@@ -62,6 +45,8 @@ server {
     ssl_trusted_certificate /etc/nginx/cert/chain1.pem;
 
     server_name glrh11.com;
+    # add Strict-Transport-Security to prevent man in the middle attacks
+    add_header Strict-Transport-Security "max-age=31536000";
     
     location = / {
         root /www/read_in_life_web/;
@@ -70,8 +55,11 @@ server {
     location ~ \.(css|js|ico|html|txt) {
         root /www/read_in_life_web/;
         index index.html;
-    }   
-
+    }
+    location ^~ /a_r {
+        root /www/read_in_life_web/;
+        error_page 404 /index.html;
+    }  
     location /{
         expires -1;
         proxy_set_header Host $host;

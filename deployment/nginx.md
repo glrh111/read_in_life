@@ -56,7 +56,7 @@ server {
         root /www/read_in_life_web/;
         index index.html;
     }
-    location ^~ /a_r {
+    location ~ ^/a_r {
         root /www/read_in_life_web/;
         error_page 404 /index.html;
     }  

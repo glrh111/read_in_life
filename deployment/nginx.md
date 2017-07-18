@@ -11,7 +11,7 @@
 
 ```
 1. docker pull nginx 
-2. docker run --name nginx -p 80:80 -p 443:443 --restart always -d -v /home/glrh11/workspace/nginxlog/:/data/ -v /home/glrh11/workspace/read-in-life-api.conf:/etc/nginx/conf.d/read-in-life-api.conf:ro -v /etc/letsencrypt/archive/glrh11.com/:/etc/nginx/cert/:ro   nginx
+2. docker run --name nginx -p 80:80 -p 443:443 --restart always -d -v /home/glrh11/workspace/nginxlog/:/data/ -v /home/glrh11/workspace/read-in-life-api.conf:/etc/nginx/conf.d/read-in-life-api.conf:ro -v /etc/letsencrypt/archive/glrh11.com/:/etc/nginx/cert/:ro -v /home/glrh11/workspace/read_in_life_web/read-in-life-web/dist:/www/read_in_life_web/  nginx
 ```
 
 ## 配置文件实例

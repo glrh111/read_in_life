@@ -15,6 +15,7 @@
 * API服务
 * 后台管理服务(待开发)
 * nginx服务
+* IM聊天服务(待开发, 希望使用Golang开发)
 * elastic搜索服务(待开发)
 * 队列服务(待开发)
 
@@ -22,8 +23,9 @@
 
 ## 项目内容
 + [API代码](https://github.com/glrh111/read_in_life_api) (已上线, 参见 [API实例](http://glrh11.com/ping/ping))
-+ [weapp小程序代码](https://github.com/glrh111/read_in_life_weapp) (正在开发,v0.1已经提审,但一直没通过)
-+ [前端代码](https://github.com/glrh111/read_in_life_web)(正在开发)
++ IM相关代码
++ [weapp小程序代码](https://github.com/glrh111/read_in_life_weapp) (v0.1已经提审,但一直没通过,现准备置之不理)
++ [前端代码](https://github.com/glrh111/read_in_life_web)(已上线, 参见 [网站实例](https://glrh11.com))
 + [服务部署相关](https://github.com/glrh111/read_in_life/tree/master/deployment)
 + 搜索服务elastic实现(正在开发)
 

@@ -8,7 +8,9 @@ elasticsearch是一个开源分析引擎. 可以作为简易的搜索引擎使�
 
 ```
 docker pull elasticsearch (注意: 5.6以后, 这个镜像只在该官网更新)
-docker run -d -p 9200:9200 -p 9300:9300 -v /home/glrh11/workspace/esdata:/usr/share/elasticsearch/data --env ES_JAVA_OPTS="-Xms90m -Xmx110m" --name elastic elasticsearch 
+docker run -d -p 9200:9200 -p 9300:9300 -v /home/glrh11/workspace/esdata:/usr/share/elasticsearch/data --env ES_JAVA_OPTS="-Xms512m -Xmx512m" --name kitty-elastic elasticsearch 
+
+docker run -d -p 9200:9200 -p 9300:9300 -v /home/centos/workspace/elasticdata:/usr/share/elasticsearch/data --env ES_JAVA_OPTS="-Xms512m -Xmx512m" --name kitty-elastic elasticsearch 
 ```
 
 ## F&Q

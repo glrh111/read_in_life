@@ -19,6 +19,7 @@
 ```
 # my own write in 2017-06-17
 # 参考: https://serverfault.com/questions/67316/in-nginx-how-can-i-rewrite-all-http-requests-to-https-while-maintaining-sub-dom
+# wss配置参考: https://www.nginx.com/blog/websocket-nginx/
 upstream read_in_life_api{
       server 192.168.0.4:8000  max_fails=3  fail_timeout=10s;
 }
@@ -40,9 +41,9 @@ server {
     listen 443 ssl;
     listen [::]:443 ssl ipv6only=on;
 
-    ssl_certificate /etc/nginx/cert/fullchain1.pem;
-    ssl_certificate_key /etc/nginx/cert/privkey1.pem;
-    ssl_trusted_certificate /etc/nginx/cert/chain1.pem;
+    ssl_certificate /etc/nginx/cert/fullchain2.pem;
+    ssl_certificate_key /etc/nginx/cert/privkey2.pem;
+    ssl_trusted_certificate /etc/nginx/cert/chain2.pem;
 
     server_name glrh11.com;
     # add Strict-Transport-Security to prevent man in the middle attacks
@@ -64,6 +65,38 @@ server {
         expires -1;
         proxy_set_header Host $host;
         proxy_pass http://read_in_life_api;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        access_log /data/log/nginx/glrh11.com/access_log main;
+        error_log /data/log/nginx/glrh11.com/error_log info;
+    }
+}
+# im websocket
+upstream read_in_life_im{
+      server 192.168.0.8:8282  max_fails=3  fail_timeout=10s;
+}
+map $http_upgrade $connection_upgrade {
+        default upgrade;
+        '' close;
+}
+server {
+    listen 443 ssl;
+    # listen [::]:443 ssl ipv6only=on;
+
+    ssl_certificate /etc/nginx/cert/fullchain2.pem;
+    ssl_certificate_key /etc/nginx/cert/privkey2.pem;
+    ssl_trusted_certificate /etc/nginx/cert/chain2.pem;
+
+    server_name im.glrh11.com;
+    # add Strict-Transport-Security to prevent man in the middle attacks
+    add_header Strict-Transport-Security "max-age=31536000";
+    
+    location /{
+        proxy_pass http://read_in_life_im;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection $connection_upgrade;
+        
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         access_log /data/log/nginx/glrh11.com/access_log main;
